@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Settings — Microsoft Campus Club KFS</title>
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  .settings-form {
+    max-width: 650px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+  .checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .checkbox-field input {
+    width: auto;
+    margin: 0;
+  }
+  .checkbox-field label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .success-banner {
+    display: none;
+    background: #eef7e2;
+    color: var(--success);
+    border-radius: var(--radius);
+    padding: 10px 13px;
+    font-size: 13px;
+    margin-bottom: 18px;
+    border: 1px solid #ceead6;
+  }
+  .success-banner.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar__mark">
+      <div class="logo-badge small">
+        <img src="assets/logo.png" alt="Microsoft Student Ambassadors Campus Club logo">
+      </div>
+      Microsoft Campus Club <span>KFS</span>
+    </div>
+
+    <div class="sidebar__user">
+      <div class="avatar" id="sidebar-avatar">—</div>
+      <div>
+        <div class="sidebar__user-name" id="sidebar-name">—</div>
+        <div class="sidebar__user-email" id="sidebar-email">—</div>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav">
+      <a class="sidebar__nav-item" href="dashboard.html" id="nav-overview">Overview</a>
+      <a class="sidebar__nav-item" href="organization.html" id="nav-org">Organization</a>
+      <a class="sidebar__nav-item" href="applications.html" id="nav-apps">Applications</a>
+      <a class="sidebar__nav-item" href="users.html" id="nav-users">Users</a>
+      <a class="sidebar__nav-item active" href="settings.html" id="nav-settings">Email Settings</a>
+    </nav>
+
+    <div style="margin-top:auto; display:flex; align-items:center; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px; width:100%;">
+      <button class="btn-logout" id="logout-btn" style="margin:0; border:none; background:none; color:inherit; cursor:pointer;">Sign out</button>
+      <button id="theme-toggle" style="background:none; border:none; font-size:18px; cursor:pointer; color:inherit; padding:6px;" title="Toggle Dark/Light Mode">🌙</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main__header">
+      <h1>Admissions Email Settings</h1>
+      <p>Configure SMTP settings for sending automated acceptance emails with credentials and onboarding resources.</p>
+    </div>
+
+    <div class="card settings-form">
+      <h2 style="margin-top:0; margin-bottom:16px; font-family:var(--font-display); font-size:18px; color:var(--maroon);">SMTP & Delivery Configurations</h2>
+      
+      <div class="success-banner" id="settings-success"></div>
+      <div class="form-error" id="settings-error"></div>
+
+      <form id="smtp-form">
+        <div class="form-row">
+          <div class="field">
+            <label for="host">SMTP Host</label>
+            <input type="text" id="host" required placeholder="e.g. smtp.gmail.com">
+          </div>
+          <div class="field">
+            <label for="port">SMTP Port</label>
+            <input type="number" id="port" required placeholder="e.g. 587">
+          </div>
+        </div>
+
+        <div class="checkbox-field">
+          <input type="checkbox" id="secure">
+          <label for="secure">Use SSL (Port 465)</label>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="user">SMTP Username / Email</label>
+            <input type="email" id="user" required placeholder="e.g. alaa.gabr@studentambassadors.com">
+          </div>
+          <div class="field">
+            <label for="pass">SMTP Password</label>
+            <input type="password" id="pass" placeholder="Enter new password to change">
+            <div class="hint-text" id="pass-hint">Existing password set. Leave blank to keep unchanged.</div>
+          </div>
+        </div>
+
+        <h2 style="margin-top:24px; margin-bottom:16px; font-family:var(--font-display); font-size:18px; color:var(--maroon); border-top:1px solid var(--line); padding-top:24px;">Sender & Candidate Info</h2>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="fromName">Sender Name</label>
+            <input type="text" id="fromName" required placeholder="e.g. MSC-KFS Admissions">
+          </div>
+          <div class="field">
+            <label for="fromEmail">Sender Email Address</label>
+            <input type="email" id="fromEmail" required placeholder="e.g. alaa.gabr@studentambassadors.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="whatsappGroupLink">WhatsApp Onboarding Group Link</label>
+            <input type="url" id="whatsappGroupLink" placeholder="https://chat.whatsapp.com/...">
+          </div>
+          <div class="field">
+            <label for="platformUrl">Platform URL (Landing / Login)</label>
+            <input type="url" id="platformUrl" placeholder="https://msckfs.z16.web.core.windows.net">
+          </div>
+        </div>
+
+        <div style="margin-top:24px; display:flex; gap:12px;">
+          <button type="submit" class="btn-primary" id="btn-save" style="width:auto; padding-left:30px; padding-right:30px;">Save Settings</button>
+          <button type="button" class="btn-secondary" id="btn-test" style="width:auto;">Send Test Email</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/org-data.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>

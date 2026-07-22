@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Board Application - Microsoft Campus Club KFS</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  /* Extra styling for select/textarea inputs in forms outside of modals */
+  .field select {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    font-size: 14px;
+    font-family: var(--font-body);
+    background: #fbfcfe;
+    color: var(--ink);
+  }
+  .field select:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+  .success-card {
+    background: #eef7e2;
+    border-left: 4px solid var(--success);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .success-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-family: var(--font-display);
+  }
+  .success-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #435e00;
+  }
+  .closed-container {
+    padding: 30px 20px;
+    text-align: center;
+    background: var(--danger-soft);
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+  }
+  .closed-container h3 {
+    margin-top: 0;
+    color: var(--danger);
+    font-family: var(--font-display);
+  }
+  .closed-container p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+  <button id="theme-toggle" style="background:none; border:none; font-size:20px; cursor:pointer;" title="Toggle Dark/Light Mode">🌙</button>
+</div>
+
+<div class="auth-shell">
+
+  <div class="auth-brand">
+    <div class="auth-brand__mark">Microsoft Campus Club <span>KFS</span></div>
+
+    <div class="auth-brand__body">
+      <div class="logo-badge">
+        <img src="assets/logo.png" alt="Microsoft Student Ambassadors Campus Club logo">
+      </div>
+      <h1>Join the Board of Microsoft Campus Club KFS</h1>
+      <p>Apply to join our leadership team. Shape the future of the club and help students develop their technical and professional potential.</p>
+    </div>
+
+    <div class="auth-brand__foot">Microsoft Campus Club — Kafr El-Sheikh</div>
+
+    <svg class="org-lattice" viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#e8542e" stroke-width="1.2" opacity="0.35">
+        <line x1="230" y1="60" x2="120" y2="150"/>
+        <line x1="230" y1="60" x2="230" y2="150"/>
+        <line x1="230" y1="60" x2="340" y2="150"/>
+        <line x1="120" y1="150" x2="60" y2="250"/>
+        <line x1="120" y1="150" x2="140" y2="250"/>
+        <line x1="230" y1="150" x2="200" y2="250"/>
+        <line x1="230" y1="150" x2="260" y2="250"/>
+        <line x1="340" y1="150" x2="320" y2="250"/>
+        <line x1="340" y1="150" x2="400" y2="250"/>
+        <line x1="60" y1="250" x2="40" y2="340"/>
+        <line x1="60" y1="250" x2="90" y2="340"/>
+        <line x1="200" y1="250" x2="180" y2="340"/>
+        <line x1="260" y1="250" x2="280" y2="340"/>
+        <line x1="320" y1="250" x2="330" y2="340"/>
+        <line x1="400" y1="250" x2="410" y2="340"/>
+      </g>
+      <g fill="#e8542e">
+        <circle cx="230" cy="60" r="7" opacity="0.9"/>
+        <circle cx="120" cy="150" r="5.5" opacity="0.75"/>
+        <circle cx="230" cy="150" r="5.5" opacity="0.75"/>
+        <circle cx="340" cy="150" r="5.5" opacity="0.75"/>
+        <circle cx="60" cy="250" r="4" opacity="0.55"/>
+        <circle cx="140" cy="250" r="4" opacity="0.55"/>
+        <circle cx="200" cy="250" r="4" opacity="0.55"/>
+        <circle cx="260" cy="250" r="4" opacity="0.55"/>
+        <circle cx="320" cy="250" r="4" opacity="0.55"/>
+        <circle cx="400" cy="250" r="4" opacity="0.55"/>
+        <circle cx="40" cy="340" r="3" opacity="0.4"/>
+        <circle cx="90" cy="340" r="3" opacity="0.4"/>
+        <circle cx="180" cy="340" r="3" opacity="0.4"/>
+        <circle cx="280" cy="340" r="3" opacity="0.4"/>
+        <circle cx="330" cy="340" r="3" opacity="0.4"/>
+        <circle cx="410" cy="340" r="3" opacity="0.4"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card" id="form-container" style="max-width: 440px;">
+      <h2>Board Application</h2>
+      <p class="subtitle">Complete the form below. We will review your application and get in touch for an interview.</p>
+
+      <div class="form-error" id="form-error"></div>
+
+      <div class="success-card" id="success-card" style="display: none;">
+        <h3>Submission Successful</h3>
+        <p>Your board application has been received. Thank you for your interest in joining Microsoft Campus Club KFS!</p>
+      </div>
+
+      <div class="closed-container" id="closed-container" style="display: none;">
+        <h3>Applications Closed</h3>
+        <p>Board applications are currently closed. Please check back later or follow our announcements.</p>
+      </div>
+
+      <form id="app-form">
+        <div class="field">
+          <label for="fullName">Full Name (English letters only)</label>
+          <input type="text" id="fullName" name="fullName" required placeholder="e.g. John Doe">
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="e.g. name@example.com">
+        </div>
+
+        <div class="field">
+          <label for="phoneNumber">Phone Number (with country code)</label>
+          <input type="text" id="phoneNumber" name="phoneNumber" required placeholder="e.g. +201234567890">
+        </div>
+
+        <div class="field">
+          <label for="desiredDepartmentId">Desired Department</label>
+          <select id="desiredDepartmentId" name="desiredDepartmentId" required>
+            <option value="">Loading departments...</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="desiredRole">Desired Position</label>
+          <input type="text" id="desiredRole" name="desiredRole" required placeholder="e.g. Graphic Designer, FR Lead">
+        </div>
+
+        <div class="field">
+          <label for="referralSource">How did you hear about us?</label>
+          <select id="referralSource" name="referralSource" required>
+            <option value="">Select an option</option>
+            <option value="Friend">Friend</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="X">X (Twitter)</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="memberStatus">Status</label>
+          <select id="memberStatus" name="memberStatus" required>
+            <option value="">Select your status</option>
+            <option value="student">Student</option>
+            <option value="graduate">Graduate</option>
+          </select>
+        </div>
+
+        <div id="student-fields" style="display: none;">
+          <div class="field">
+            <label for="universityName">University Name</label>
+            <input type="text" id="universityName" name="universityName" placeholder="e.g. Kafr El-Sheikh University">
+          </div>
+          <div class="field">
+            <label for="universityYear">University Year</label>
+            <input type="text" id="universityYear" name="universityYear" placeholder="e.g. Year 3">
+          </div>
+        </div>
+
+        <div id="graduate-fields" style="display: none;">
+          <div class="field">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" name="companyName" placeholder="e.g. Microsoft">
+          </div>
+          <div class="field">
+            <label for="jobTitle">Job Title</label>
+            <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g. Software Engineer">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="whyJoin">Why do you want to join Microsoft Campus Club KFS?</label>
+          <textarea id="whyJoin" name="whyJoin" required style="width:100%; height:80px; padding:11px 13px; border-radius:var(--radius); border:1px solid var(--line); font-family:var(--font-body); font-size:14px; background:#fbfcfe; resize:none;" placeholder="Share your motivation"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="skills">Skills (e.g. technical, soft skills, or design tools)</label>
+          <textarea id="skills" name="skills" required style="width:100%; height:80px; padding:11px 13px; border-radius:var(--radius); border:1px solid var(--line); font-family:var(--font-body); font-size:14px; background:#fbfcfe; resize:none;" placeholder="List your key skills"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="linkedinUrl">LinkedIn URL</label>
+          <input type="url" id="linkedinUrl" name="linkedinUrl" required placeholder="https://linkedin.com/in/...">
+        </div>
+
+        <div class="field">
+          <label for="githubUrl">GitHub URL</label>
+          <input type="url" id="githubUrl" name="githubUrl" placeholder="Optional">
+        </div>
+
+        <button type="submit" class="btn-primary" id="btn-submit">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const form = document.getElementById('app-form');
+    const formError = document.getElementById('form-error');
+    const successCard = document.getElementById('success-card');
+    const closedContainer = document.getElementById('closed-container');
+    const statusSelect = document.getElementById('memberStatus');
+    const deptSelect = document.getElementById('desiredDepartmentId');
+    const studentFields = document.getElementById('student-fields');
+    const graduateFields = document.getElementById('graduate-fields');
+
+    // 1. Check window status and fetch departments
+    try {
+      const [status, deptsData] = await Promise.all([
+        apiRequest('/applications/status'),
+        apiRequest('/applications/departments')
+      ]);
+
+      if (!status.board || !status.board.isOpen) {
+        form.style.display = 'none';
+        closedContainer.style.display = 'block';
+        return;
+      }
+
+      // Populate departments select
+      deptSelect.innerHTML = '<option value="">Select a department</option>';
+      deptsData.departments.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.id;
+        option.textContent = dept.name;
+        deptSelect.appendChild(option);
+      });
+    } catch (err) {
+      console.error(err);
+      formError.textContent = 'Failed to load application details.';
+      formError.classList.add('visible');
+      form.style.display = 'none';
+      return;
+    }
+
+    // 2. Toggle status fields
+    statusSelect.addEventListener('change', () => {
+      const isStudent = statusSelect.value === 'student';
+      const isGraduate = statusSelect.value === 'graduate';
+
+      studentFields.style.display = isStudent ? 'block' : 'none';
+      document.getElementById('universityName').required = isStudent;
+
+      graduateFields.style.display = isGraduate ? 'block' : 'none';
+      document.getElementById('companyName').required = isGraduate;
+    });
+
+    // 3. Handle Submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formError.classList.remove('visible');
+      formError.textContent = '';
+
+      const formData = new FormData(form);
+      const payload = {
+        kind: 'board',
+        fullName: formData.get('fullName'),
+        email: formData.get('email'),
+        phoneNumber: formData.get('phoneNumber'),
+        desiredDepartmentId: formData.get('desiredDepartmentId'),
+        desiredRole: formData.get('desiredRole'),
+        referralSource: formData.get('referralSource'),
+        whyJoin: formData.get('whyJoin'),
+        skills: formData.get('skills'),
+        memberStatus: formData.get('memberStatus'),
+        universityName: formData.get('universityName') || null,
+        universityYear: formData.get('universityYear') || null,
+        companyName: formData.get('companyName') || null,
+        jobTitle: formData.get('jobTitle') || null,
+        linkedinUrl: formData.get('linkedinUrl') || null,
+        githubUrl: formData.get('githubUrl') || null
+      };
+
+      try {
+        await apiRequest('/applications', {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+
+        // Hide form and show success
+        form.style.display = 'none';
+        successCard.style.display = 'block';
+      } catch (err) {
+        formError.textContent = err.message || 'An error occurred while submitting.';
+        formError.classList.add('visible');
+      }
+    });
+  });
+</script>
+</body>
+</html>

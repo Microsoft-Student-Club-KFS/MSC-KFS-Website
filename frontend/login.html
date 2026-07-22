@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft Campus Club - KFS</title>
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+  <button id="theme-toggle" style="background:none; border:none; font-size:20px; cursor:pointer;" title="Toggle Dark/Light Mode">🌙</button>
+</div>
+
+<div class="auth-shell">
+
+  <div class="auth-brand">
+    <div class="auth-brand__mark">Microsoft Campus Club <span>KFS</span></div>
+
+    <div class="auth-brand__body">
+      <div class="logo-badge">
+        <img src="assets/logo.png" alt="Microsoft Student Ambassadors Campus Club logo">
+      </div>
+      <h1>One system for the whole club, from the board down to every group.</h1>
+      <p>Departments, tracks, groups, and members, each with the access their role calls for. Nothing more, nothing less.</p>
+    </div>
+
+    <div class="auth-brand__foot">Microsoft Campus Club — Kafr El-Sheikh</div>
+
+    <svg class="org-lattice" viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#e8542e" stroke-width="1.2" opacity="0.35">
+        <line x1="230" y1="60" x2="120" y2="150"/>
+        <line x1="230" y1="60" x2="230" y2="150"/>
+        <line x1="230" y1="60" x2="340" y2="150"/>
+        <line x1="120" y1="150" x2="60" y2="250"/>
+        <line x1="120" y1="150" x2="140" y2="250"/>
+        <line x1="230" y1="150" x2="200" y2="250"/>
+        <line x1="230" y1="150" x2="260" y2="250"/>
+        <line x1="340" y1="150" x2="320" y2="250"/>
+        <line x1="340" y1="150" x2="400" y2="250"/>
+        <line x1="60" y1="250" x2="40" y2="340"/>
+        <line x1="60" y1="250" x2="90" y2="340"/>
+        <line x1="200" y1="250" x2="180" y2="340"/>
+        <line x1="260" y1="250" x2="280" y2="340"/>
+        <line x1="320" y1="250" x2="330" y2="340"/>
+        <line x1="400" y1="250" x2="410" y2="340"/>
+      </g>
+      <g fill="#e8542e">
+        <circle cx="230" cy="60" r="7" opacity="0.9"/>
+        <circle cx="120" cy="150" r="5.5" opacity="0.75"/>
+        <circle cx="230" cy="150" r="5.5" opacity="0.75"/>
+        <circle cx="340" cy="150" r="5.5" opacity="0.75"/>
+        <circle cx="60" cy="250" r="4" opacity="0.55"/>
+        <circle cx="140" cy="250" r="4" opacity="0.55"/>
+        <circle cx="200" cy="250" r="4" opacity="0.55"/>
+        <circle cx="260" cy="250" r="4" opacity="0.55"/>
+        <circle cx="320" cy="250" r="4" opacity="0.55"/>
+        <circle cx="400" cy="250" r="4" opacity="0.55"/>
+        <circle cx="40" cy="340" r="3" opacity="0.4"/>
+        <circle cx="90" cy="340" r="3" opacity="0.4"/>
+        <circle cx="180" cy="340" r="3" opacity="0.4"/>
+        <circle cx="280" cy="340" r="3" opacity="0.4"/>
+        <circle cx="330" cy="340" r="3" opacity="0.4"/>
+        <circle cx="410" cy="340" r="3" opacity="0.4"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card">
+      <h2>Sign in</h2>
+      <p class="subtitle">Use the username and password issued to you by the club administration.</p>
+
+      <div class="form-error" id="login-error"></div>
+
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" autocomplete="username" autofocus>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-primary" id="login-submit">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

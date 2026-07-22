@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Microsoft Campus Club KFS</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar__mark">
+      <div class="logo-badge small">
+        <img src="assets/logo.png" alt="Microsoft Student Ambassadors Campus Club logo">
+      </div>
+      Microsoft Campus Club <span>KFS</span>
+    </div>
+
+    <div class="sidebar__user">
+      <div class="avatar" id="sidebar-avatar">—</div>
+      <div>
+        <div class="sidebar__user-name" id="sidebar-name">—</div>
+        <div class="sidebar__user-email" id="sidebar-email">—</div>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav">
+      <a class="sidebar__nav-item active" href="dashboard.html">Overview</a>
+    </nav>
+
+    <button class="btn-logout" id="logout-btn">Sign out</button>
+  </aside>
+
+  <main class="main">
+    <div class="main__header">
+      <h1>Welcome, <span id="header-name">—</span></h1>
+      <p>Here is your account and the roles assigned to you.</p>
+    </div>
+
+    <div class="card">
+      <h2>Account</h2>
+      <dl class="info-grid">
+        <div>
+          <dt>Full name</dt>
+          <dd id="info-full-name">—</dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd id="info-email">—</dd>
+        </div>
+        <div>
+          <dt>Username</dt>
+          <dd id="info-username">—</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd id="info-status">—</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2>Roles</h2>
+      <table class="roles-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Scope</th>
+            <th>Scope ID</th>
+          </tr>
+        </thead>
+        <tbody id="roles-body"></tbody>
+      </table>
+      <div class="empty-state" id="roles-empty" style="display:none;">No roles assigned yet.</div>
+    </div>
+  </main>
+
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

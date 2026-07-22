@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft Campus Club KFS</title>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  /* Premium Landing Page Specific Styles */
+  body {
+    background: var(--page);
+    color: var(--ink);
+    margin: 0;
+    font-family: var(--font-body);
+  }
+  .landing-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .landing-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--maroon);
+  }
+  .landing-brand img {
+    height: 36px;
+  }
+  .landing-nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .landing-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .landing-nav a:hover {
+    color: var(--primary);
+  }
+  .landing-nav .btn-signin {
+    background: var(--maroon);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .landing-nav .btn-signin:hover {
+    background: #341019;
+    color: #fff;
+  }
+  .hero {
+    padding: 100px 40px;
+    text-align: center;
+    background: radial-gradient(circle at top right, #fff4f1 0%, var(--page) 60%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--maroon);
+    margin: 0 auto 20px;
+    max-width: 800px;
+    line-height: 1.2;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0 auto 30px;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  .cta-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .btn-hero-primary {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-hero-primary:hover {
+    background: var(--primary-dark);
+  }
+  .btn-hero-secondary {
+    background: transparent;
+    color: var(--maroon);
+    border: 2px solid var(--maroon);
+    padding: 10px 26px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-hero-secondary:hover {
+    background: var(--maroon);
+    color: #fff;
+  }
+  .section-title {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 32px;
+    color: var(--maroon);
+    margin-bottom: 40px;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 768px) {
+    .status-grid { grid-template-columns: 1fr; }
+  }
+  .status-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .status-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+  }
+  .status-badge-inline {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+  .status-badge-inline.open {
+    background: #eef7e2;
+    color: var(--success);
+  }
+  .status-badge-inline.closed {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+  .tracks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 992px) {
+    .tracks-grid { grid-template-columns: 1fr; }
+  }
+  .track-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: left;
+  }
+  .track-card h3 {
+    margin-top: 0;
+    color: var(--maroon);
+    font-family: var(--font-display);
+    font-size: 20px;
+  }
+  .track-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .about-box {
+    background: var(--maroon);
+    color: #fff;
+    border-radius: 20px;
+    padding: 50px;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .about-box h2 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    margin-top: 0;
+  }
+  .about-box p {
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.9;
+  }
+  .footer {
+    background: #110406;
+    color: #cbb;
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header class="landing-header">
+  <div class="landing-brand">
+    <img src="assets/logo.png" alt="Microsoft Student Ambassadors Badge">
+    Microsoft Campus Club KFS
+  </div>
+  <nav class="landing-nav">
+    <a href="#about">About Us</a>
+    <a href="#status">Applications</a>
+    <a href="#tracks">Our Tracks</a>
+    <button id="theme-toggle" style="background:none; border:none; font-size:18px; cursor:pointer;" title="Toggle Dark/Light Mode">🌙</button>
+    <a href="login.html" class="btn-signin">Sign In</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Shape the Future of Technology at Kafr El-Sheikh</h1>
+  <p>Welcome to Microsoft Campus Club KFS. We are a community of student leaders and tech enthusiasts dedicated to peer learning, mentorship, and professional growth.</p>
+  <div class="cta-group">
+    <a href="#status" class="btn-hero-primary">Apply Now</a>
+    <a href="login.html" class="btn-hero-secondary">Member Portal</a>
+  </div>
+</section>
+
+<div class="container" id="about">
+  <div class="about-box">
+    <h2>About Our Club</h2>
+    <p>As part of the Microsoft Student Ambassadors program, Microsoft Campus Club KFS provides students at Kafr El-Sheikh University with real-world technical training, workspace experience, and career preparation. Our structured mentorship tracks and departments empower students to transition seamlessly from academic theories to high-impact jobs.</p>
+  </div>
+</div>
+
+<div class="container" id="status">
+  <h2 class="section-title">Admission Status</h2>
+  <div class="status-grid">
+    <div class="status-card">
+      <div class="status-badge-inline closed" id="board-badge">Closed</div>
+      <h3 style="margin: 0 0 10px; font-family: var(--font-display); font-size: 22px;">Board & Staff Applications</h3>
+      <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px; line-height: 1.5;">Apply to join the leadership board, manage club departments, lead tracks, and organize events.</p>
+      <a href="apply-board.html" class="btn-hero-primary" id="btn-apply-board" style="display:inline-block; font-size:14px; padding:8px 20px;">Apply as Board</a>
+    </div>
+
+    <div class="status-card">
+      <div class="status-badge-inline closed" id="member-badge">Closed</div>
+      <h3 style="margin: 0 0 10px; font-family: var(--font-display); font-size: 22px;">Member & Student Applications</h3>
+      <p style="color: var(--muted); font-size: 14px; margin-bottom: 20px; line-height: 1.5;">Join our Technical Mentorship Program tracks as a student. Get assigned to a learning group and grow your skills.</p>
+      <a href="apply-member.html" class="btn-hero-primary" id="btn-apply-member" style="display:inline-block; font-size:14px; padding:8px 20px;">Apply as Member</a>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="tracks" style="padding-top:0;">
+  <h2 class="section-title">Technical Learning Tracks</h2>
+  <div class="tracks-grid">
+    <div class="track-card">
+      <h3>Data Science</h3>
+      <p>Master Python, SQL, exploratory data analysis, statistics, and machine learning models. Learn to clean, model, and deploy predictive models to extract real business value.</p>
+    </div>
+    <div class="track-card">
+      <h3>Software Engineering</h3>
+      <p>Build web applications using modern architectures. Dive deep into databases, API development, backend infrastructure, system design, and coding best practices.</p>
+    </div>
+    <div class="track-card">
+      <h3>Data Analysis</h3>
+      <p>Develop critical data storytelling skills. Learn data preparation, visual reporting, dashboard creation, and advanced query writing to assist decision-making processes.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  &copy; 2026 Microsoft Campus Club KFS. All rights reserved. Kafr El-Sheikh University.
+</footer>
+
+<script src="js/api.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const status = await apiRequest('/applications/status');
+      
+      const boardBadge = document.getElementById('board-badge');
+      const btnBoard = document.getElementById('btn-apply-board');
+      if (status.board && status.board.isOpen) {
+        boardBadge.textContent = 'Open';
+        boardBadge.className = 'status-badge-inline open';
+        btnBoard.style.display = 'inline-block';
+      } else {
+        boardBadge.textContent = 'Closed';
+        boardBadge.className = 'status-badge-inline closed';
+        btnBoard.style.display = 'none';
+      }
+
+      const memberBadge = document.getElementById('member-badge');
+      const btnMember = document.getElementById('btn-apply-member');
+      if (status.member && status.member.isOpen) {
+        memberBadge.textContent = 'Open';
+        memberBadge.className = 'status-badge-inline open';
+        btnMember.style.display = 'inline-block';
+      } else {
+        memberBadge.textContent = 'Closed';
+        memberBadge.className = 'status-badge-inline closed';
+        btnMember.style.display = 'none';
+      }
+    } catch (err) {
+      console.error('Failed to load application status', err);
+    }
+  });
+</script>
+</body>
+</html>
