@@ -543,7 +543,11 @@ async function testSMTPSettings(req, res) {
   };
 
   // We await this so if it throws, the error is returned to the user
-  await sendAcceptanceEmail(mockApplication, mockCredentials);
+  try {
+    await sendAcceptanceEmail(mockApplication, mockCredentials, true);
+  } catch (err) {
+    throw httpError(400, `SMTP Connection failed: ${err.message}`);
+  }
 
   res.json({ message: `Test email sent successfully to ${req.user.email}!` });
 }

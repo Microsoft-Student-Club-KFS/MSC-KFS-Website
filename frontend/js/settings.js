@@ -69,6 +69,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load initial settings
     await loadSMTPSettings();
 
+    // Auto-sync secure checkbox and port number to avoid SSL configuration errors
+    const secureCheckbox = document.getElementById('secure');
+    const portInput = document.getElementById('port');
+
+    secureCheckbox.addEventListener('change', () => {
+      if (secureCheckbox.checked) {
+        if (portInput.value === '587' || !portInput.value) {
+          portInput.value = '465';
+        }
+      } else {
+        if (portInput.value === '465' || !portInput.value) {
+          portInput.value = '587';
+        }
+      }
+    });
+
+    portInput.addEventListener('input', () => {
+      const port = parseInt(portInput.value, 10);
+      if (port === 465) {
+        secureCheckbox.checked = true;
+      } else if (port === 587) {
+        secureCheckbox.checked = false;
+      }
+    });
+
     // Save Settings Submit Handler
     const form = document.getElementById('smtp-form');
     form.addEventListener('submit', async (e) => {

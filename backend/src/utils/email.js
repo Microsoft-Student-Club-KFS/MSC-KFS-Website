@@ -39,19 +39,26 @@ async function resolveWhatsAppLink(groupId, unitId, deptId, fallback) {
  *
  * @param {Object} application  The applicant's database record
  * @param {Object} credentials  { username, temporaryPassword, groupCode, assignedGroupId, unitId, deptId }
+ * @param {boolean} throwOnError Whether to rethrow errors (useful for SMTP settings test page)
  */
-async function sendAcceptanceEmail(application, credentials) {
+async function sendAcceptanceEmail(application, credentials, throwOnError = false) {
   try {
     // 1. Fetch SMTP settings from database
     const settingsRes = await db.query("SELECT value FROM system_settings WHERE key = 'smtp'");
     if (settingsRes.rowCount === 0) {
       console.warn('[EMAIL] SMTP settings not configured in system_settings. Skipping email delivery.');
+      if (throwOnError) {
+        throw new Error('SMTP settings are not configured in system_settings.');
+      }
       return;
     }
 
     const config = settingsRes.rows[0].value;
     if (!config.host || !config.user || !config.pass) {
       console.warn('[EMAIL] SMTP configurations are incomplete. Skipping email delivery.');
+      if (throwOnError) {
+        throw new Error('SMTP configurations are incomplete. Please configure Host, Username, and Password.');
+      }
       return;
     }
 
@@ -212,7 +219,7 @@ async function sendAcceptanceEmail(application, credentials) {
             <div class="placement-badge">
               Accepted for: ${placementType} — ${placementName}${groupCodeStr}
             </div>
-
+            
             <p>Your member account has been created successfully. Here are your credentials to log in to our learning and management platform:</p>
             
             <div class="creds-box">
@@ -262,9 +269,13 @@ async function sendAcceptanceEmail(application, credentials) {
     console.log(`[EMAIL] Attempting to send acceptance email to: ${application.email}`);
     const info = await transporter.sendMail(mailOptions);
     console.log(`[EMAIL] Acceptance email sent successfully! MessageID: ${info.messageId}`);
+    return info;
 
   } catch (err) {
     console.error('[EMAIL] Failed to send acceptance email:', err);
+    if (throwOnError) {
+      throw err;
+    }
   }
 }
 
