@@ -8,7 +8,7 @@ const db = require('../config/db');
 const httpError = require('../utils/httpError');
 const { hashPassword } = require('../utils/password');
 const { chooseGroupForAssignment } = require('../utils/autoAssignment');
-const { sendAcceptanceEmail } = require('../utils/email');
+const { sendAcceptanceEmail, sendRejectionEmail } = require('../utils/email');
 
 // GET /api/applications/status
 async function getStatus(req, res) {
@@ -242,10 +242,22 @@ async function decide(req, res) {
         [req.user.id, notes || null, id]
       );
       await client.query('COMMIT');
+
+      // Send rejection email in background
+      sendRejectionEmail(application).catch(err => {
+        console.error('[EMAIL] Failed to send rejection email:', err);
+      });
+
       return res.json({ status: 'rejected' });
     }
 
     // 3. Handle Acceptance
+    // Validate that the email does not already belong to a user
+    const emailCheck = await client.query('SELECT 1 FROM users WHERE email = $1', [application.email]);
+    if (emailCheck.rowCount > 0) {
+      throw httpError(400, `A user with the email '${application.email}' already exists in the system.`);
+    }
+
     // A. Generate unique username
     const emailLocal = application.email.split('@')[0].toLowerCase().replace(/[^a-z0-9_.-]/g, '');
     let baseUsername = emailLocal || 'user';
