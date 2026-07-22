@@ -528,10 +528,22 @@ async function testSMTPSettings(req, res) {
     throw httpError(403, 'Unauthorized. Admin settings only.');
   }
 
-  // Create a mock application matching req.user and mock credentials
+  const { testEmail } = req.body;
+
+  // Retrieve configured SMTP settings to find default recipient
+  const settingsRes = await db.query("SELECT value FROM system_settings WHERE key = 'smtp'");
+  let configEmail = null;
+  if (settingsRes.rowCount > 0) {
+    const config = settingsRes.rows[0].value;
+    configEmail = config.fromEmail || config.user;
+  }
+
+  const recipientEmail = testEmail || configEmail || req.user.email;
+
+  // Create a mock application matching the recipient and mock credentials
   const mockApplication = {
     full_name: req.user.full_name,
-    email: req.user.email,
+    email: recipientEmail,
     kind: 'board',
     desired_role: 'System Administrator (Test Role)'
   };
@@ -549,7 +561,7 @@ async function testSMTPSettings(req, res) {
     throw httpError(400, `SMTP Connection failed: ${err.message}`);
   }
 
-  res.json({ message: `Test email sent successfully to ${req.user.email}!` });
+  res.json({ message: `Test email sent successfully to ${recipientEmail}!` });
 }
 
 module.exports = {

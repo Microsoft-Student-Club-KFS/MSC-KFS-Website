@@ -148,6 +148,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     testBtn.addEventListener('click', async () => {
       const successBox = document.getElementById('settings-success');
       const errorBox = document.getElementById('settings-error');
+
+      const testEmail = prompt(
+        'Enter recipient email for the test message (leave blank to send to SMTP email):',
+        '2hmed.gamel@gmail.com'
+      );
+      if (testEmail === null) {
+        return; // user cancelled
+      }
       
       successBox.classList.remove('visible');
       errorBox.textContent = '';
@@ -156,7 +164,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       
       try {
         const res = await apiRequest('/portal/settings/smtp/test', {
-          method: 'POST'
+          method: 'POST',
+          body: JSON.stringify({ testEmail: testEmail.trim() || undefined })
         });
         successBox.textContent = res.message || 'Test email sent successfully!';
         successBox.classList.add('visible');
